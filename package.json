@@ -6,9 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "pnpm exec prettier . --write"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.290.0",
@@ -25,7 +27,10 @@
     "autoprefixer": "^10",
     "eslint": "^8",
     "eslint-config-next": "14.0.0",
+    "eslint-config-prettier": "^9.0.0",
     "postcss": "^8",
+    "prettier": "^3.0.3",
+    "prettier-plugin-tailwindcss": "^0.5.6",
     "tailwindcss": "^3",
     "typescript": "^5"
   }
