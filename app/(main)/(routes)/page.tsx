@@ -1,4 +1,5 @@
 import { UserButton } from '@clerk/nextjs'
+import { ModeToggle } from '@/components/mode-toggle'
 
 export default function Home() {
   return (
@@ -7,6 +8,7 @@ export default function Home() {
         This is a protected route
       </p>
       <UserButton afterSignOutUrl="/" />
+      <ModeToggle />
     </main>
   )
 }
