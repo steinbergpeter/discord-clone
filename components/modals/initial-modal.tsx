@@ -1,17 +1,12 @@
 'use client'
-
-import React, { useEffect, useState } from 'react'
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
-  DialogDescription,
-  DialogHeader,
-  DialogFooter,
-  DialogClose,
   DialogContent,
-  DialogOverlay,
-  DialogPortal,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog'
 import {
   Form,
@@ -22,20 +17,24 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 import FileUpload from '../file-upload'
 
-const formSchema = z.object({
+const serverFormSchema = z.object({
   name: z.string().min(1, 'Server name is required'),
   imageUrl: z.string().min(1, 'Server image is required'),
 })
 
-type FormSchemaType = z.infer<typeof formSchema>
+type ServerFormSchemaType = z.infer<typeof serverFormSchema>
 
 const InitialModal = () => {
+  const router = useRouter()
+
   const [isMounted, setIsMounted] = useState<boolean>(false)
 
   useEffect(() => {
@@ -44,7 +43,7 @@ const InitialModal = () => {
   }, [])
 
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(serverFormSchema),
     defaultValues: {
       name: '',
       imageUrl: '',
@@ -55,10 +54,18 @@ const InitialModal = () => {
     handleSubmit,
     formState: { isSubmitting },
     control,
+    reset,
   } = form
 
-  const onSubmit = async (values: FormSchemaType) => {
-    console.log(values)
+  const onSubmit = async (values: ServerFormSchemaType) => {
+    try {
+      await axios.post('/api/servers', values)
+      reset()
+      router.refresh()
+      window.location.reload()
+    } catch (err) {
+      console.error((err as Error).message)
+    }
   }
 
   if (!isMounted) return null
