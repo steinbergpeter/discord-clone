@@ -1,10 +1,11 @@
+import ThemeProvider from '@/components/providers/ThemeProvider'
+import ModalProvider from '@/components/providers/modal-provider'
+import { cn } from '@/lib/utils'
+import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
-import { type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import './globals.css'
-import { ClerkProvider } from '@clerk/nextjs'
-import ThemeProvider from '@/components/ThemeProvider'
-import { cn } from '@/lib/utils'
 
 const open_sans = Open_Sans({ subsets: ['latin'] })
 
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             enableSystem={false}
             storageKey="discord-theme"
           >
+            <ModalProvider />
             {children}
           </ThemeProvider>
         </body>

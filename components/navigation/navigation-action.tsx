@@ -2,11 +2,14 @@
 
 import { Plus } from 'lucide-react'
 import ActionToolTip from '@/components/action-tooltip'
+import useModalStore from '@/hooks/use-modal-store'
 
-type Props = {}
+const NavigationAction = () => {
+  const { onOpen } = useModalStore()
+  const handleClick = () => {
+    onOpen('createServer')
+  }
 
-const NavigationAction = ({}: Props) => {
-  const handleClick = () => {}
   return (
     <div>
       <ActionToolTip side="right" align="center" label="Add a server">
